@@ -1,0 +1,22 @@
+{
+  "name": "sqlconnector",
+  "version": "0.0.1",
+  "license": "MIT",
+  "dependencies": {
+    "mssql": "^4.0.4",
+    "mysql": "^2.13.0",
+    "mysql2": "^1.3.5",
+    "pg": "^6.4.0",
+    "sqlite3": "^3.1.8"
+  },
+  "devDependencies": {
+    "chai": "2.2.0",
+    "gulp": "^3.8.11",
+    "gulp-istanbul": "^0.10.0",
+    "gulp-jshint": "^1.10.0",
+    "gulp-mocha": "^2.0.1",
+    "json-sql": "git+https://github.com/AsuraDiti/json-sql.git",
+    "typescript": "^2.4.1"
+  },
+  "main": "./dist/index"
+}
