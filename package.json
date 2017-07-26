@@ -18,5 +18,6 @@
     "json-sql": "git+https://github.com/AsuraDiti/json-sql.git",
     "typescript": "^2.4.1"
   },
-  "main": "./dist/index"
+  "main": "./dist/index",
+  "types": "./dist/index.d.ts"
 }
