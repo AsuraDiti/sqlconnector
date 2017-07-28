@@ -81,7 +81,7 @@ var sqliteconnection = (function () {
                 resolve(true);
             });
         });
-        this._initPromise.then(function (result) { sc._isReady = result; });
+        this._initPromise.then(function (result) { sc._isReady = result; }).catch(function (error) { });
         return this._initPromise;
     };
     sqliteconnection.prototype.isReady = function () {

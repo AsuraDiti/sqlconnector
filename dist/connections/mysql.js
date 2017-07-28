@@ -76,9 +76,7 @@ var mysqltransaction = (function () {
         return new Promise(function (resolve, reject) {
             st._transaction.commit(function (err) {
                 if (err) {
-                    return st._transaction.rollback(function () {
-                        reject(err);
-                    });
+                    reject(err);
                 }
                 resolve();
             });
@@ -152,7 +150,7 @@ var mysqlconnection = (function () {
                 resolve(true);
             });
         });
-        this._initPromise.then(function (result) { sc._isReady = result; });
+        this._initPromise.then(function (result) { sc._isReady = result; }).catch(function (error) { });
         return this._initPromise;
     };
     mysqlconnection.prototype.isReady = function () {

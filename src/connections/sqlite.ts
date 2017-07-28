@@ -43,6 +43,7 @@ export class sqlitetransaction implements sqltransaction
             {
                 st._connection.execute("COMMIT;", []).then(function(result : any)
                     {
+
                         st._finished = true;
                         resolve();
                     }).catch(function(error: any)
@@ -103,7 +104,7 @@ export class sqliteconnection implements sqlconnection
         });
 
 
-        this._initPromise.then( function(result){ sc._isReady = result; } );
+        this._initPromise.then( function(result){ sc._isReady = result; } ).catch((error) => {});
 
         return this._initPromise;
     }

@@ -60,8 +60,8 @@ export class postgresqltransaction implements sqltransaction
                 this._finished = true;
                 resolve();
             }).catch((error:any) => {
-                st._transaction.release();
-                this._finished = true;
+                //st._transaction.release();
+                //this._finished = true;
                 reject(new Error(error));
             })
         });
@@ -147,7 +147,7 @@ export class postgresqlconnection implements sqlconnection
         });
 
 
-        this._initPromise.then( function(result){ sc._isReady = result; } );
+        this._initPromise.then( function(result){ sc._isReady = result; } ).catch((error) => {});
 
         return this._initPromise;
     }

@@ -116,7 +116,7 @@ export class mssqlconnection implements sqlconnection
         });
 
 
-        this._initPromise.then( function(result){ sc._isReady = result; } );
+        this._initPromise.then( function(result){ sc._isReady = result; } ).catch((error) => {});
 
         return this._initPromise;
     }

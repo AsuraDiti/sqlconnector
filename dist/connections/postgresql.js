@@ -80,8 +80,8 @@ var postgresqltransaction = (function () {
                 _this._finished = true;
                 resolve();
             }).catch(function (error) {
-                st._transaction.release();
-                _this._finished = true;
+                //st._transaction.release();
+                //this._finished = true;
                 reject(new Error(error));
             });
         });
@@ -157,7 +157,7 @@ var postgresqlconnection = (function () {
                 reject(new Error(error));
             });
         });
-        this._initPromise.then(function (result) { sc._isReady = result; });
+        this._initPromise.then(function (result) { sc._isReady = result; }).catch(function (error) { });
         return this._initPromise;
     };
     postgresqlconnection.prototype.isReady = function () {

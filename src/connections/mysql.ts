@@ -54,9 +54,7 @@ export class mysqltransaction implements sqltransaction
             {
                 st._transaction.commit(function(err:any) {
                     if (err) {
-                      return st._transaction.rollback(function() {
-                        reject(err);
-                      });
+                      reject(err);
                     }
                     resolve();
                 });
@@ -139,7 +137,7 @@ export class mysqlconnection implements sqlconnection
         });
 
 
-        this._initPromise.then( function(result){ sc._isReady = result; } );
+        this._initPromise.then( function(result){ sc._isReady = result; } ).catch((error) => {});
 
         return this._initPromise;
     }

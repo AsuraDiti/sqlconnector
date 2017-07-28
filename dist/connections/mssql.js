@@ -134,7 +134,7 @@ var mssqlconnection = (function () {
                 resolve(true);
             });
         });
-        this._initPromise.then(function (result) { sc._isReady = result; });
+        this._initPromise.then(function (result) { sc._isReady = result; }).catch(function (error) { });
         return this._initPromise;
     };
     mssqlconnection.prototype.isReady = function () {
