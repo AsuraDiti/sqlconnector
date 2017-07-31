@@ -150,48 +150,36 @@ var mssqlconnection = (function () {
     };
     mssqlconnection.prototype.queryPool = function (poolConnection, queryString, values) {
         return __awaiter(this, void 0, void 0, function () {
-            var queryResult, _i, _a, key, result, ex_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        _b.trys.push([0, 2, , 3]);
-                        queryResult = new index_1.sqlresult();
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) {
                         if (values != undefined && !Array.isArray(values)) {
-                            for (_i = 0, _a = Object.keys(values); _i < _a.length; _i++) {
-                                key = _a[_i];
+                            for (var _i = 0, _a = Object.keys(values); _i < _a.length; _i++) {
+                                var key = _a[_i];
                                 poolConnection.input(key, values[key]);
                             }
                         }
-                        return [4 /*yield*/, poolConnection.query(queryString)];
-                    case 1:
-                        result = _b.sent();
-                        if (result.recordset)
-                            queryResult.rows = result.recordset;
-                        if (result.rowsAffected && result.rowsAffected.length != 0)
-                            queryResult.affectedRows = result.rowsAffected;
-                        return [2 /*return*/, Promise.resolve(queryResult)];
-                    case 2:
-                        ex_1 = _b.sent();
-                        return [2 /*return*/, Promise.reject(new Error(ex_1))];
-                    case 3: return [2 /*return*/];
-                }
+                        poolConnection.query(queryString).then(function (result) {
+                            var queryResult = new index_1.sqlresult();
+                            if (result.recordset)
+                                queryResult.rows = result.recordset;
+                            if (result.rowsAffected && result.rowsAffected.length != 0)
+                                queryResult.affectedRows = result.rowsAffected;
+                            resolve(queryResult);
+                        }).catch(function (error) {
+                            reject(new Error(error));
+                        });
+                    })];
             });
         });
     };
     mssqlconnection.prototype.query = function (queryString, values) {
         var sc = this;
         return new Promise(function (resolve, reject) {
-            return __awaiter(this, void 0, void 0, function () {
-                var poolConnection;
-                return __generator(this, function (_a) {
-                    poolConnection = new mssql.Request(sc._dbObject);
-                    sc.queryPool(poolConnection, queryString, values).then(function (queryResult) {
-                        resolve(queryResult);
-                    }).catch(function (error) {
-                        reject(error);
-                    });
-                    return [2 /*return*/];
-                });
+            var poolConnection = new mssql.Request(sc._dbObject);
+            sc.queryPool(poolConnection, queryString, values).then(function (queryResult) {
+                resolve(queryResult);
+            }).catch(function (error) {
+                reject(error);
             });
         });
     };

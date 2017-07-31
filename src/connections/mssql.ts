@@ -140,9 +140,8 @@ export class mssqlconnection implements sqlconnection
 
     async queryPool(poolConnection: any, queryString: string, values: object | Array<any>) : Promise<sqlresult>
     {
-        try
-        {
-            let queryResult = new sqlresult();
+        return new Promise<sqlresult>((resolve, reject) =>{
+
             if( values != undefined && !Array.isArray(values))
             {
                 for(let key of Object.keys(values))
@@ -151,17 +150,19 @@ export class mssqlconnection implements sqlconnection
                 }
             }
 
-            let result = await poolConnection.query(queryString);
-            if(result.recordset)
-                queryResult.rows = result.recordset;
-            if(result.rowsAffected && result.rowsAffected.length != 0)
-                queryResult.affectedRows = result.rowsAffected;
+            poolConnection.query(queryString).then((result:any) => {
+                let queryResult = new sqlresult();
+                if(result.recordset)
+                    queryResult.rows = result.recordset;
+                if(result.rowsAffected && result.rowsAffected.length != 0)
+                    queryResult.affectedRows = result.rowsAffected;
 
-            return Promise.resolve(queryResult);
-        }catch(ex)
-        {
-            return Promise.reject(new Error(ex));
-        }
+                resolve(queryResult);
+            }).catch((error:any) => {
+                reject(new Error(error));
+            })
+
+        });
 
     }
 
@@ -170,7 +171,7 @@ export class mssqlconnection implements sqlconnection
     {
         let sc : mssqlconnection = this;
         return new Promise<sqlresult>(
-            async function(resolve, reject)
+            function(resolve, reject)
             {
                 let poolConnection = new mssql.Request(sc._dbObject);
 
@@ -179,10 +180,6 @@ export class mssqlconnection implements sqlconnection
                 }).catch((error:any) => {
                     reject(error);
                 });
-
-
-
-
             }
         );
     }
