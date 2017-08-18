@@ -142,7 +142,8 @@ var mysqlconnection = (function () {
                 user: config.user,
                 password: config.password,
                 database: config.database,
-                port: config.port
+                port: config.port,
+                namedPlaceholders: true
             });
             sc._dbObject.getConnection(function (err, connection) {
                 if (connection)

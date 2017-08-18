@@ -128,7 +128,8 @@ export class mysqlconnection implements sqlconnection
               user            : config.user,
               password        : config.password,
               database        : config.database,
-              port            : config.port
+              port            : config.port,
+              namedPlaceholders: true
             });
 
             sc._dbObject.getConnection(function(err:any, connection:any) {
