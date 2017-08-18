@@ -125,6 +125,7 @@ var mssqlconnection = (function () {
         this._isReady = false;
     }
     mssqlconnection.prototype.init = function (config) {
+        this.Config = config;
         var sc = this;
         this._initPromise = new Promise(function (resolve, reject) {
             sc._dbObject = new mssql.ConnectionPool({ user: config.user, password: config.password, server: config.host, database: config.database }, function (err) {
@@ -136,6 +137,9 @@ var mssqlconnection = (function () {
         });
         this._initPromise.then(function (result) { sc._isReady = result; }).catch(function (error) { });
         return this._initPromise;
+    };
+    mssqlconnection.prototype.getConfig = function () {
+        return this.Config;
     };
     mssqlconnection.prototype.isReady = function () {
         return this._isReady;

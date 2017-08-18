@@ -72,6 +72,7 @@ var sqliteconnection = (function () {
         this._isReady = false;
     }
     sqliteconnection.prototype.init = function (config) {
+        this.Config = config;
         var sc = this;
         this._initPromise = new Promise(function (resolve, reject) {
             sc._dbObject = new sqlite3.cached.Database(config.host, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, function (error) {
@@ -83,6 +84,9 @@ var sqliteconnection = (function () {
         });
         this._initPromise.then(function (result) { sc._isReady = result; }).catch(function (error) { });
         return this._initPromise;
+    };
+    sqliteconnection.prototype.getConfig = function () {
+        return this.Config;
     };
     sqliteconnection.prototype.isReady = function () {
         return this._isReady;

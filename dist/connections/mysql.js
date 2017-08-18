@@ -134,6 +134,7 @@ var mysqlconnection = (function () {
         this._isReady = false;
     }
     mysqlconnection.prototype.init = function (config) {
+        this.Config = config;
         var sc = this;
         this._initPromise = new Promise(function (resolve, reject) {
             sc._dbObject = mysql.createPool({
@@ -156,6 +157,9 @@ var mysqlconnection = (function () {
         });
         this._initPromise.then(function (result) { sc._isReady = result; }).catch(function (error) { });
         return this._initPromise;
+    };
+    mysqlconnection.prototype.getConfig = function () {
+        return this.Config;
     };
     mysqlconnection.prototype.isReady = function () {
         return this._isReady;

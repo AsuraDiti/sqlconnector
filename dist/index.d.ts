@@ -6,6 +6,7 @@ export interface sqlconnection {
     execute(queryString: string, values: object | Array<any>): Promise<sqlresult>;
     createtransaction(): sqltransaction;
     close(): Promise<boolean>;
+    getConfig(): sqlconfig;
 }
 export interface sqltransaction {
     init(connection: sqlconnection): void;

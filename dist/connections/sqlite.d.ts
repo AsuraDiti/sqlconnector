@@ -11,10 +11,12 @@ export declare class sqlitetransaction implements sqltransaction {
     execute(queryString: string, values: object | Array<any>): Promise<any>;
 }
 export declare class sqliteconnection implements sqlconnection {
+    protected Config: sqlconfig;
     protected _initPromise: Promise<boolean>;
     protected _isReady: boolean;
     protected _dbObject: any;
     init(config: sqlconfig): Promise<boolean>;
+    getConfig(): sqlconfig;
     isReady(): boolean;
     waitForReady(): Promise<boolean>;
     createtransaction(): sqltransaction;

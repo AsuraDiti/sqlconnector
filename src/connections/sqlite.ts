@@ -87,6 +87,7 @@ export class sqlitetransaction implements sqltransaction
 
 export class sqliteconnection implements sqlconnection
 {
+    protected Config: sqlconfig;
     protected _initPromise : Promise<boolean> = undefined;
     protected _isReady : boolean = false;
 
@@ -94,6 +95,7 @@ export class sqliteconnection implements sqlconnection
 
     init(config: sqlconfig) : Promise<boolean>
     {
+        this.Config = config;
         let sc : sqliteconnection = this;
         this._initPromise = new Promise<boolean>( function(resolve, reject){
             sc._dbObject = new sqlite3.cached.Database(config.host, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, function(error: any)
@@ -106,7 +108,12 @@ export class sqliteconnection implements sqlconnection
 
         this._initPromise.then( function(result){ sc._isReady = result; } ).catch((error) => {});
 
+
         return this._initPromise;
+    }
+
+    getConfig(): sqlconfig{
+        return this.Config;
     }
 
     isReady(): boolean

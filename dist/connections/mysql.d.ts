@@ -12,10 +12,12 @@ export declare class mysqltransaction implements sqltransaction {
     execute(queryString: string, values: object | Array<any>): Promise<sqlresult>;
 }
 export declare class mysqlconnection implements sqlconnection {
+    protected Config: sqlconfig;
     protected _initPromise: Promise<boolean>;
     protected _isReady: boolean;
     _dbObject: any;
     init(config: sqlconfig): Promise<boolean>;
+    getConfig(): sqlconfig;
     isReady(): boolean;
     waitForReady(): Promise<boolean>;
     createtransaction(): sqltransaction;

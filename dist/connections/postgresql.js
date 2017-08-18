@@ -140,6 +140,7 @@ var postgresqlconnection = (function () {
         this._isReady = false;
     }
     postgresqlconnection.prototype.init = function (config) {
+        this.Config = config;
         var sc = this;
         this._initPromise = new Promise(function (resolve, reject) {
             sc._dbObject = new pg.Pool({
@@ -159,6 +160,9 @@ var postgresqlconnection = (function () {
         });
         this._initPromise.then(function (result) { sc._isReady = result; }).catch(function (error) { });
         return this._initPromise;
+    };
+    postgresqlconnection.prototype.getConfig = function () {
+        return this.Config;
     };
     postgresqlconnection.prototype.isReady = function () {
         return this._isReady;
