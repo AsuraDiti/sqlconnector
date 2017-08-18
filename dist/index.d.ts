@@ -21,7 +21,8 @@ export declare class sqlresult {
 }
 export declare class SQLError extends Error {
     SQLQuery: string;
-    constructor(message: string, sqlquery: string);
+    SQLValues: any;
+    constructor(message: string, sqlquery: string, sqlvalues: any);
     getSQLQuery(): string;
 }
 export declare enum sqltype {

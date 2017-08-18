@@ -89,7 +89,7 @@ export class mysqltransaction implements sqltransaction
             {
                 st._transaction.query(queryString, values, function (error:any, results:any, fields:any) {
 
-                    if(error){ return reject(new SQLError(error, queryString)); }
+                    if(error){ return reject(new SQLError(error, queryString, values)); }
 
                     let queryResult = new sqlresult();
                     if(results == undefined){
@@ -177,7 +177,7 @@ export class mysqlconnection implements sqlconnection
                         connection.query(queryString, values, function (error:any, results:any, fields:any) {
                             connection.release();
 
-                            if(error){ return reject(new SQLError(error, queryString)); }
+                            if(error){ return reject(new SQLError(error, queryString, values)); }
 
                             let queryResult = new sqlresult();
                             if(results == undefined){

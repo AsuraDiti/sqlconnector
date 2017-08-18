@@ -105,7 +105,7 @@ var mysqltransaction = (function () {
                 return __generator(this, function (_a) {
                     st._transaction.query(queryString, values, function (error, results, fields) {
                         if (error) {
-                            return reject(new index_1.SQLError(error, queryString));
+                            return reject(new index_1.SQLError(error, queryString, values));
                         }
                         var queryResult = new index_1.sqlresult();
                         if (results == undefined) {
@@ -181,7 +181,7 @@ var mysqlconnection = (function () {
                         connection.query(queryString, values, function (error, results, fields) {
                             connection.release();
                             if (error) {
-                                return reject(new index_1.SQLError(error, queryString));
+                                return reject(new index_1.SQLError(error, queryString, values));
                             }
                             var queryResult = new index_1.sqlresult();
                             if (results == undefined) {

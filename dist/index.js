@@ -59,9 +59,10 @@ var sqlresult = (function () {
 exports.sqlresult = sqlresult;
 var SQLError = (function (_super) {
     __extends(SQLError, _super);
-    function SQLError(message, sqlquery) {
+    function SQLError(message, sqlquery, sqlvalues) {
         var _this = _super.call(this, message) || this;
         _this.SQLQuery = sqlquery;
+        _this.SQLValues = sqlvalues;
         return _this;
     }
     SQLError.prototype.getSQLQuery = function () {

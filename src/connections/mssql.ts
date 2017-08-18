@@ -159,7 +159,7 @@ export class mssqlconnection implements sqlconnection
 
                 resolve(queryResult);
             }).catch((error:any) => {
-                reject(new SQLError(error, queryString));
+                reject(new SQLError(error, queryString, values));
             })
 
         });

@@ -33,10 +33,12 @@ export class sqlresult
 export class SQLError extends Error
 {
     public SQLQuery: string;
-    constructor(message: string, sqlquery: string){
+    public SQLValues: any;
+    constructor(message: string, sqlquery: string, sqlvalues: any){
         super(message);
 
         this.SQLQuery = sqlquery;
+        this.SQLValues = sqlvalues;
     }
 
     public getSQLQuery() : string{
