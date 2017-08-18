@@ -54,11 +54,11 @@ var mysqltransaction = (function () {
         return new Promise(function (resolve, reject) {
             st._connection._dbObject.getConnection(function (err, connection) {
                 if (err) {
-                    reject(new Error(err));
+                    return reject(new Error(err));
                 }
                 connection.beginTransaction(function (err2) {
                     if (err2) {
-                        reject(new Error(err2));
+                        return reject(new Error(err2));
                     }
                     st._transaction = connection;
                     resolve();
@@ -76,7 +76,7 @@ var mysqltransaction = (function () {
         return new Promise(function (resolve, reject) {
             st._transaction.commit(function (err) {
                 if (err) {
-                    reject(err);
+                    return reject(err);
                 }
                 resolve();
             });
@@ -105,9 +105,12 @@ var mysqltransaction = (function () {
                 return __generator(this, function (_a) {
                     st._transaction.query(queryString, values, function (error, results, fields) {
                         if (error) {
-                            reject(new Error(error));
+                            return reject(new Error(error));
                         }
                         var queryResult = new index_1.sqlresult();
+                        if (results == undefined) {
+                            return resolve(queryResult);
+                        }
                         if (results.affectedRows != undefined)
                             queryResult.affectedRows = [results.affectedRows];
                         if (Array.isArray(results))
@@ -177,9 +180,12 @@ var mysqlconnection = (function () {
                         connection.query(queryString, values, function (error, results, fields) {
                             connection.release();
                             if (error) {
-                                reject(new Error(error));
+                                return reject(new Error(error));
                             }
                             var queryResult = new index_1.sqlresult();
+                            if (results == undefined) {
+                                return resolve(queryResult);
+                            }
                             if (results.affectedRows != undefined)
                                 queryResult.affectedRows = [results.affectedRows];
                             if (Array.isArray(results))

@@ -28,10 +28,10 @@ export class mysqltransaction implements sqltransaction
         return new Promise<void>(function(resolve, reject)
             {
                 st._connection._dbObject.getConnection(function(err:any, connection:any) {
-                    if(err) { reject(new Error(err)); }
+                    if(err) { return reject(new Error(err)); }
 
                     connection.beginTransaction(function(err2:any) {
-                        if (err2) { reject(new Error(err2)); }
+                        if (err2) { return reject(new Error(err2)); }
                         st._transaction = connection;
 
                         resolve();
@@ -54,7 +54,7 @@ export class mysqltransaction implements sqltransaction
             {
                 st._transaction.commit(function(err:any) {
                     if (err) {
-                      reject(err);
+                      return reject(err);
                     }
                     resolve();
                 });
@@ -89,9 +89,12 @@ export class mysqltransaction implements sqltransaction
             {
                 st._transaction.query(queryString, values, function (error:any, results:any, fields:any) {
 
-                    if(error){ reject(new Error(error)); }
+                    if(error){ return reject(new Error(error)); }
 
                     let queryResult = new sqlresult();
+                    if(results == undefined){
+                        return resolve(queryResult);
+                    }
                     if(results.affectedRows != undefined)
                         queryResult.affectedRows = [results.affectedRows];
                     if(Array.isArray(results))
@@ -173,9 +176,12 @@ export class mysqlconnection implements sqlconnection
                         connection.query(queryString, values, function (error:any, results:any, fields:any) {
                             connection.release();
 
-                            if(error){ reject(new Error(error)); }
+                            if(error){ return reject(new Error(error)); }
 
                             let queryResult = new sqlresult();
+                            if(results == undefined){
+                                return resolve(queryResult);
+                            }
                             if(results.affectedRows != undefined)
                                 queryResult.affectedRows = [results.affectedRows];
                             if(Array.isArray(results))
