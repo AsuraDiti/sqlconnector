@@ -19,6 +19,11 @@ export declare class sqlresult {
     rows: {}[];
     affectedRows: number[];
 }
+export declare class SQLError extends Error {
+    SQLQuery: string;
+    constructor(message: string, sqlquery: string);
+    getSQLQuery(): string;
+}
 export declare enum sqltype {
     SQLITE = 0,
     MSSQL = 1,

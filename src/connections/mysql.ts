@@ -1,4 +1,4 @@
-import { sqlconnection, sqlconfig, sqlresult, sqltransaction } from '../index'
+import { sqlconnection, sqlconfig, sqlresult, sqltransaction, SQLError } from '../index'
 
 declare function require(path: string) : any;
 const mysql = require('mysql2');
@@ -89,7 +89,7 @@ export class mysqltransaction implements sqltransaction
             {
                 st._transaction.query(queryString, values, function (error:any, results:any, fields:any) {
 
-                    if(error){ return reject(new Error(error)); }
+                    if(error){ return reject(new SQLError(error, queryString)); }
 
                     let queryResult = new sqlresult();
                     if(results == undefined){
@@ -176,7 +176,7 @@ export class mysqlconnection implements sqlconnection
                         connection.query(queryString, values, function (error:any, results:any, fields:any) {
                             connection.release();
 
-                            if(error){ return reject(new Error(error)); }
+                            if(error){ return reject(new SQLError(error, queryString)); }
 
                             let queryResult = new sqlresult();
                             if(results == undefined){

@@ -30,6 +30,22 @@ export class sqlresult
     affectedRows: number[] = [0];
 }
 
+export class SQLError extends Error
+{
+    public SQLQuery: string;
+    constructor(message: string, sqlquery: string){
+        super(message);
+
+        this.SQLQuery = sqlquery;
+    }
+
+    public getSQLQuery() : string{
+        return this.SQLQuery;
+    }
+
+
+}
+
 export enum sqltype
 {
     SQLITE,

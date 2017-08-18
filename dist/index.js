@@ -1,4 +1,14 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -47,6 +57,19 @@ var sqlresult = (function () {
     return sqlresult;
 }());
 exports.sqlresult = sqlresult;
+var SQLError = (function (_super) {
+    __extends(SQLError, _super);
+    function SQLError(message, sqlquery) {
+        var _this = _super.call(this, message) || this;
+        _this.SQLQuery = sqlquery;
+        return _this;
+    }
+    SQLError.prototype.getSQLQuery = function () {
+        return this.SQLQuery;
+    };
+    return SQLError;
+}(Error));
+exports.SQLError = SQLError;
 var sqltype;
 (function (sqltype) {
     sqltype[sqltype["SQLITE"] = 0] = "SQLITE";

@@ -1,4 +1,4 @@
-import { sqlconnection, sqlconfig, sqlresult, sqltransaction } from '../index'
+import { sqlconnection, sqlconfig, sqlresult, sqltransaction, SQLError } from '../index'
 
 declare function require(path: string) : any;
 const mssql = require('mssql');
@@ -159,7 +159,7 @@ export class mssqlconnection implements sqlconnection
 
                 resolve(queryResult);
             }).catch((error:any) => {
-                reject(new Error(error));
+                reject(new SQLError(error, queryString));
             })
 
         });

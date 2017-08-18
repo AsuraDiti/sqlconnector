@@ -166,7 +166,7 @@ var mssqlconnection = (function () {
                                 queryResult.affectedRows = result.rowsAffected;
                             resolve(queryResult);
                         }).catch(function (error) {
-                            reject(new Error(error));
+                            reject(new index_1.SQLError(error, queryString));
                         });
                     })];
             });
