@@ -1,4 +1,4 @@
-import { sqlconnection, sqlconfig, sqlresult, sqltransaction } from '../index'
+import { sqlconnection, sqlconfig, sqlresult, sqltransaction, SQLError } from '../index'
 
 declare function require(path: string) : any;
 const pg = require('pg');
@@ -107,7 +107,7 @@ export class postgresqltransaction implements sqltransaction
 
                     resolve(queryResult);
                 }).catch((error:any) => {
-                    reject(new Error(error));
+                    reject(new SQLError(error, queryString, values));
                 });
             }
         );
@@ -193,11 +193,11 @@ export class postgresqlconnection implements sqlconnection
                             resolve(queryResult);
                         }).catch((error:any) => {
                             client.release();
-                            return reject(new Error(error));
+                            return reject(new SQLError(error, queryString, values));
                         });
 
                 }).catch((error:any) => {
-                    return reject(new Error(error));
+                    return reject(new SQLError(error, queryString, values));
                 });
             }
         );

@@ -127,7 +127,7 @@ var sqliteconnection = (function () {
             var queryResult = new index_1.sqlresult();
             sc._dbObject.all(queryString, values, function (error, result) {
                 if (error) {
-                    return reject(new Error(error));
+                    return reject(new index_1.SQLError(error, queryString, values));
                 }
                 queryResult.rows = result;
                 resolve(queryResult);

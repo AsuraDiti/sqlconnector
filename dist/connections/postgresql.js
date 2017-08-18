@@ -121,7 +121,7 @@ var postgresqltransaction = (function () {
                             queryResult.rows = results.rows;
                         resolve(queryResult);
                     }).catch(function (error) {
-                        reject(new Error(error));
+                        reject(new index_1.SQLError(error, queryString, values));
                     });
                     return [2 /*return*/];
                 });
@@ -187,10 +187,10 @@ var postgresqlconnection = (function () {
                             resolve(queryResult);
                         }).catch(function (error) {
                             client.release();
-                            return reject(new Error(error));
+                            return reject(new index_1.SQLError(error, queryString, values));
                         });
                     }).catch(function (error) {
-                        return reject(new Error(error));
+                        return reject(new index_1.SQLError(error, queryString, values));
                     });
                     return [2 /*return*/];
                 });

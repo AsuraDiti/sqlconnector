@@ -1,4 +1,4 @@
-import { sqlconnection, sqlconfig, sqlresult, sqltransaction } from '../index'
+import { sqlconnection, sqlconfig, sqlresult, sqltransaction, SQLError } from '../index'
 
 declare function require(path: string) : any;
 var sqlite3 = require('sqlite3').verbose();
@@ -169,7 +169,7 @@ export class sqliteconnection implements sqlconnection
                 let queryResult = new sqlresult();
                 sc._dbObject.all(queryString, values, function(error: any, result: any)
                 {
-                    if(error){ return reject(new Error(error)); }
+                    if(error){ return reject(new SQLError(error, queryString, values)); }
 
                     queryResult.rows = result;
                     resolve(queryResult);
