@@ -15,6 +15,7 @@ export interface sqltransaction {
     rollback(): Promise<void>;
     query(queryString: string, values: object | Array<any>): Promise<sqlresult>;
     execute(queryString: string, values: object | Array<any>): Promise<sqlresult>;
+    getConfig(): sqlconfig;
 }
 export declare class sqlresult {
     rows: {}[];

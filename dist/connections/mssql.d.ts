@@ -5,6 +5,7 @@ export declare class mssqltransaction implements sqltransaction {
     protected _begin: boolean;
     protected _finished: boolean;
     init(connection: sqlconnection): void;
+    getConfig(): sqlconfig;
     begin(): Promise<void>;
     commit(): Promise<void>;
     rollback(): Promise<void>;

@@ -46,6 +46,9 @@ var mysqltransaction = (function () {
         if (connection instanceof mysqlconnection)
             this._connection = connection;
     };
+    mysqltransaction.prototype.getConfig = function () {
+        return this._connection.getConfig();
+    };
     mysqltransaction.prototype.begin = function () {
         if (this._begin)
             throw new Error('The function "begin" was already called. Create a new transaction');

@@ -46,6 +46,9 @@ var postgresqltransaction = (function () {
         if (connection instanceof postgresqlconnection)
             this._connection = connection;
     };
+    postgresqltransaction.prototype.getConfig = function () {
+        return this._connection.getConfig();
+    };
     postgresqltransaction.prototype.begin = function () {
         if (this._begin)
             throw new Error('The function "begin" was already called. Create a new transaction');

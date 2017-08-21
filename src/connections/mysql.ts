@@ -18,6 +18,10 @@ export class mysqltransaction implements sqltransaction
             this._connection = connection;
     }
 
+    getConfig(): sqlconfig{
+        return this._connection.getConfig();
+    }
+
     begin() : Promise<void>
     {
         if(this._begin)
